@@ -6,6 +6,8 @@ public class Deck : MonoBehaviour
 {
     [Header("Set In Inspector")]
     public bool startFaceUp = false;
+    public bool newLayout = false;
+
     //suits
     public Sprite suitClub;
     public Sprite suitDiamond;
@@ -36,6 +38,16 @@ public class Deck : MonoBehaviour
 
     public void InitDeck(string deckXMLText)
     {
+        if(Prospector.S.style == 1)
+        {
+            newLayout = true;
+        }
+        else
+        {
+            newLayout = false;
+        }
+
+
         if(GameObject.Find("_Deck") == null)
         {
             GameObject anchorGO = new GameObject("_Deck");
@@ -49,11 +61,7 @@ public class Deck : MonoBehaviour
             { "S", suitSpade}
         };
 
-
-
         ReadDeck(deckXMLText);
-
-
         MakeCards();
     }
 
@@ -63,7 +71,7 @@ public class Deck : MonoBehaviour
     {
         foreach(CardDefinition cd in cardDefs)
         {
-            if(cd.rank == rnk)
+            if(newLayout || cd.rank == rnk)
             {
                 return cd;
             }
@@ -179,8 +187,11 @@ public class Deck : MonoBehaviour
 
     private void AddPips(Card card)
     {
+        Debug.Log("AddPips::  card.def.pips: " + card.def.pips);
         foreach(Decorator pip in card.def.pips)
         {
+            Debug.Log("Entered For Each");
+
             _tGO = Instantiate(prefabSprite) as GameObject;
             _tGO.transform.SetParent(card.transform);
             _tGO.transform.localPosition = pip.loc;
@@ -268,10 +279,11 @@ public class Deck : MonoBehaviour
 
 
         string s = "xml[0] decoator[0]";
-        s += "type=" + xmlr.xml["xml"][0]["decorator"][0].att("type");
-        s += "x=" + xmlr.xml["xml"][0]["decorator"][0].att("x");
-        s += "y=" + xmlr.xml["xml"][0]["decorator"][0].att("y");
-        s += "scale=" + xmlr.xml["xml"][0]["decorator"][0].att("scale");
+//        s += "type=" + xmlr.xml["xml"][0]["style"][1]["decorator"][0].att("type");
+//        s += "type=" + xmlr.xml["xml"][0]["decorator"][1].att("type");
+  //      s += "x=" + xmlr.xml["xml"][0]["decorator"][0].att("x");
+    //    s += "y=" + xmlr.xml["xml"][0]["decorator"][0].att("y");
+      //  s += "scale=" + xmlr.xml["xml"][0]["decorator"][0].att("scale");
 
         //print(s);
 
@@ -280,9 +292,11 @@ public class Deck : MonoBehaviour
 
         decorators = new List<Decorator>();
         //grab an PT)XMLHashList of all the decorators in the xml fle
-        PT_XMLHashList xDecos = xmlr.xml["xml"][0]["decorator"];
-        Decorator deco;
-
+        PT_XMLHashList xDecos = xmlr.xml["xml"][0]["style"][0]["decorator"];
+   
+        
+        Decorator deco = new Decorator();
+        Debug.Log("xDecos in ReadDeck: " + xDecos.Count);
         for (int i = 0; i < xDecos.Count; i++)
         {
             deco = new Decorator();
@@ -302,22 +316,27 @@ public class Deck : MonoBehaviour
 
         }
 
+
+
         //read pip locations for the card
         cardDefs = new List<CardDefinition>();
 
-        PT_XMLHashList xCardDefs = xmlr.xml["xml"][0]["card"];
+        PT_XMLHashList xCardDefs = xmlr.xml["xml"][0]["style"][0]["card"];
 
-        for(int i = 0; i < xCardDefs.Count; i++)
+        for (int i = 0; i < xCardDefs.Count; i++)
         {
             //create new card def
             CardDefinition cDef = new CardDefinition();
+
+
+
             //parse
             cDef.rank = int.Parse(xCardDefs[i].att("rank"));
             //grab
             PT_XMLHashList xPips = xCardDefs[i]["pip"];
-            if(xPips != null)
+            if (xPips != null)
             {
-                for(int j = 0; j < xPips.Count; j++)
+                for (int j = 0; j < xPips.Count; j++)
                 {
                     deco = new Decorator();
                     //pips on the card are handled via the decorator
@@ -326,22 +345,117 @@ public class Deck : MonoBehaviour
                     deco.loc.x = float.Parse(xPips[j].att("x"));
                     deco.loc.y = float.Parse(xPips[j].att("y"));
                     deco.loc.z = float.Parse(xPips[j].att("z"));
-                    if(xPips[j].HasAtt("scale"))
+                    if (xPips[j].HasAtt("scale"))
                     {
                         deco.scale = float.Parse(xPips[j].att("scale"));
                     }
                     cDef.pips.Add(deco);
                 }
             }
-            if(xCardDefs[i].HasAtt("face"))
+            if (xCardDefs[i].HasAtt("face"))
             {
                 cDef.face = xCardDefs[i].att("face");
             }
             cardDefs.Add(cDef);
         }
 
+
+
+
+
     }
 
+    public void NewPips(Decorator deco)
+    {
+        //read pip locations for the card
+        cardDefs = new List<CardDefinition>();
+
+        PT_XMLHashList xCardDefs = xmlr.xml["xml"][0]["style"][1]["card"];
+        Debug.Log("xCardDefs count: " + xCardDefs.Count);
+        for (int i = 0; i < xCardDefs.Count; i++)
+        {
+            //create new card def
+            CardDefinition cDef = new CardDefinition();
+
+
+
+            //parse
+            cDef.rank = int.Parse(xCardDefs[i].att("rank"));
+            //grab
+            PT_XMLHashList xPips = xCardDefs[i]["pip"];
+            if (xPips != null)
+            {
+                for (int j = 0; j < xPips.Count; j++)
+                {
+                    deco = new Decorator();
+                    //pips on the card are handled via the decorator
+                    deco.type = "pip";
+                    deco.flip = (xPips[j].att("flip") == "1");
+                    deco.loc.x = float.Parse(xPips[j].att("x"));
+                    deco.loc.y = float.Parse(xPips[j].att("y"));
+                    deco.loc.z = float.Parse(xPips[j].att("z"));
+                    if (xPips[j].HasAtt("scale"))
+                    {
+                        deco.scale = float.Parse(xPips[j].att("scale"));
+                    }
+                    cDef.pips.Add(deco);
+                }
+            }
+            if (xCardDefs[i].HasAtt("face"))
+            {
+                cDef.face = xCardDefs[i].att("face");
+            }
+            cardDefs.Add(cDef);
+        }
+
+
+
+    }
+    public void OldPips(Decorator deco)
+    {
+        //read pip locations for the card
+        cardDefs = new List<CardDefinition>();
+
+        PT_XMLHashList xCardDefs = xmlr.xml["xml"][0]["style"][0]["card"];
+
+        for (int i = 0; i < xCardDefs.Count; i++)
+        {
+            //create new card def
+            CardDefinition cDef = new CardDefinition();
+
+
+
+            //parse
+            cDef.rank = int.Parse(xCardDefs[i].att("rank"));
+            //grab
+            PT_XMLHashList xPips = xCardDefs[i]["pip"];
+            if (xPips != null)
+            {
+                for (int j = 0; j < xPips.Count; j++)
+                {
+                    deco = new Decorator();
+                    //pips on the card are handled via the decorator
+                    deco.type = "pip";
+                    deco.flip = (xPips[j].att("flip") == "1");
+                    deco.loc.x = float.Parse(xPips[j].att("x"));
+                    deco.loc.y = float.Parse(xPips[j].att("y"));
+                    deco.loc.z = float.Parse(xPips[j].att("z"));
+                    if (xPips[j].HasAtt("scale"))
+                    {
+                        deco.scale = float.Parse(xPips[j].att("scale"));
+                    }
+                    cDef.pips.Add(deco);
+                }
+            }
+            if (xCardDefs[i].HasAtt("face"))
+            {
+                cDef.face = xCardDefs[i].att("face");
+            }
+            cardDefs.Add(cDef);
+        }
+
+
+    }
 
 
 }

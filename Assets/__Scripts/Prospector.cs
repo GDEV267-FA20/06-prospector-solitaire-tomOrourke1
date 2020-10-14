@@ -8,9 +8,21 @@ using UnityEngine.UI;
 public class Prospector : MonoBehaviour
 {
     static public Prospector S;
+    [Range(0,1)]
+    public int style;
 
     [Header("Set in Inspector")]
     public TextAsset deckXML;
+    public TextAsset style2XML;
+
+    public TextAsset GetTextAsset(int style)
+    {
+        if (style == 0)
+        {
+            return deckXML;
+        }
+        else return style2XML;
+    }
 
     [Header("Set Dynamically")]
     public Deck deck;
@@ -23,8 +35,9 @@ public class Prospector : MonoBehaviour
 
     private void Start()
     {
+
         deck = GetComponent<Deck>();
-        deck.InitDeck(deckXML.text);
+        deck.InitDeck(GetTextAsset(style).text);
         Deck.Shuffle(ref deck.cards);
 
         Card c;
