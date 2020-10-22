@@ -187,10 +187,10 @@ public class Deck : MonoBehaviour
 
     private void AddPips(Card card)
     {
-        Debug.Log("AddPips::  card.def.pips: " + card.def.pips);
+   //     Debug.Log("AddPips::  card.def.pips: " + card.def.pips);
         foreach(Decorator pip in card.def.pips)
         {
-            Debug.Log("Entered For Each");
+    //        Debug.Log("Entered For Each");
 
             _tGO = Instantiate(prefabSprite) as GameObject;
             _tGO.transform.SetParent(card.transform);
@@ -296,7 +296,7 @@ public class Deck : MonoBehaviour
    
         
         Decorator deco = new Decorator();
-        Debug.Log("xDecos in ReadDeck: " + xDecos.Count);
+  //      Debug.Log("xDecos in ReadDeck: " + xDecos.Count);
         for (int i = 0; i < xDecos.Count; i++)
         {
             deco = new Decorator();
@@ -371,7 +371,7 @@ public class Deck : MonoBehaviour
         cardDefs = new List<CardDefinition>();
 
         PT_XMLHashList xCardDefs = xmlr.xml["xml"][0]["style"][1]["card"];
-        Debug.Log("xCardDefs count: " + xCardDefs.Count);
+   //     Debug.Log("xCardDefs count: " + xCardDefs.Count);
         for (int i = 0; i < xCardDefs.Count; i++)
         {
             //create new card def

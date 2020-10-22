@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6197959688430716073}
   - component: {fileID: 6197959688430716072}
-  - component: {fileID: 370856380763272043}
+  - component: {fileID: -4915249037311740514}
   - component: {fileID: 2245746885572049309}
   m_Layer: 0
   m_Name: PrefabCard
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &370856380763272043
+--- !u!114 &-4915249037311740514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,9 +93,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 6197959688430716075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c7fd2de9326f504abcd3a495b593a75, type: 3}
+  m_Script: {fileID: 11500000, guid: 49414d08ebf09b248a49564d5eeafb82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  suit: 
+  rank: 0
+  color: {r: 0, g: 0, b: 0, a: 1}
+  colS: Black
+  decoGOs: []
+  pipGos: []
+  back: {fileID: 0}
+  def:
+    face: 
+    rank: 0
+    pips: []
+  state: 0
+  hiddenBy: []
+  layoutID: 0
+  slotDef:
+    x: 0
+    y: 0
+    faceUp: 0
+    layerName: Default
+    layerID: 0
+    id: 0
+    hiddenBy: 
+    type: slot
+    stagger: {x: 0, y: 0}
 --- !u!65 &2245746885572049309
 BoxCollider:
   m_ObjectHideFlags: 0
