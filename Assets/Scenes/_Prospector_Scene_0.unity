@@ -443,10 +443,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d31f48d88d8cd42a5a65d107e4fb29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  style: 1
+  style: 0
   deckXML: {fileID: 4900000, guid: 56dcf1a2f7d97a349b80b162d9cd5497, type: 3}
   style2XML: {fileID: 4900000, guid: 0073e62d405ad7240bb68b91f099a3ea, type: 3}
-  layoutXML: {fileID: 4900000, guid: 61f3f05951a2f4d98b35bddbc7549908, type: 3}
+  layoutXML: {fileID: 4900000, guid: 05c8361abe101924e8c027288885b1ed, type: 3}
   xOffset: 3
   yOffset: -2.5
   layoutCenter: {x: 0, y: 0, z: 0}
@@ -455,6 +455,9 @@ MonoBehaviour:
   fsPosMid2: {x: 0.4, y: 1}
   fsPosEnd: {x: 0.5, y: 0.95}
   reloadDelay: 2
+  gameOverText: {fileID: 0}
+  roundResultText: {fileID: 0}
+  highScoreText: {fileID: 0}
   deck: {fileID: 0}
   layout: {fileID: 0}
   drawPile: []

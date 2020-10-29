@@ -50,7 +50,7 @@ public class Layout : MonoBehaviour
 
         // slotsX is used as a shortcut to all the <slot>s
         PT_XMLHashList slotsX = xml["slot"];
-
+        Debug.Log("slots: " + slotsX.Count);
         for (int i = 0; i < slotsX.Count; i++)
         {
             tSD = new SlotDef(); // Create a new SlotDef instance
@@ -69,7 +69,8 @@ public class Layout : MonoBehaviour
             tSD.x = float.Parse(slotsX[i].att("x"));
             tSD.y = float.Parse(slotsX[i].att("y"));
             tSD.layerID = int.Parse(slotsX[i].att("layer"));
-
+            Debug.Log("sortingLayerNames Length: " + sortingLayerNames.Length); // 6
+            Debug.Log("layerID length: " + tSD.layerID); // i
             // This converts the number of the layerID into a text layerName
             tSD.layerName = sortingLayerNames[tSD.layerID];              // a
 
