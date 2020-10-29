@@ -507,8 +507,11 @@ MonoBehaviour:
   - Row1
   - Row2
   - Row3
-  - Discard
-  - Draw
+  - Row4
+  - Row5
+  - Row6
+  - discard
+  - draw
 --- !u!114 &933244819
 MonoBehaviour:
   m_ObjectHideFlags: 0

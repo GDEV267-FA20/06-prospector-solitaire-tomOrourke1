@@ -32,7 +32,7 @@ public class Layout : MonoBehaviour
     public SlotDef drawPile;
     public SlotDef discardPile;
     // This holds all of the possible names for the layers set by layerID
-    public string[] sortingLayerNames = new string[] { "Row0", "Row1", "Row2", "Row3", "Discard", "Draw" };
+    public string[] sortingLayerNames = new string[] { "Row0", "Row1", "Row2", "Row3", "Row0", "Row1", "Row2", "Row3", "Discard", "Draw" };
 
     // This function is called to read in the LayoutXML.xml file
     public void ReadLayout(string xmlText)
@@ -50,7 +50,7 @@ public class Layout : MonoBehaviour
 
         // slotsX is used as a shortcut to all the <slot>s
         PT_XMLHashList slotsX = xml["slot"];
-        Debug.Log("slots: " + slotsX.Count);
+
         for (int i = 0; i < slotsX.Count; i++)
         {
             tSD = new SlotDef(); // Create a new SlotDef instance
@@ -69,8 +69,7 @@ public class Layout : MonoBehaviour
             tSD.x = float.Parse(slotsX[i].att("x"));
             tSD.y = float.Parse(slotsX[i].att("y"));
             tSD.layerID = int.Parse(slotsX[i].att("layer"));
-            Debug.Log("sortingLayerNames Length: " + sortingLayerNames.Length); // 6
-            Debug.Log("layerID length: " + tSD.layerID); // i
+
             // This converts the number of the layerID into a text layerName
             tSD.layerName = sortingLayerNames[tSD.layerID];              // a
 
